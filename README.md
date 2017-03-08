@@ -25,7 +25,7 @@ Assuming a `//192.168.56.101/TEST` cifs share, accessible by a `TESTER` user wit
 1. create secret to access the cifs share
 
 ```sh
-kubectl create secret generic cifscreds --from-literal username=TESTER --from-literal password=SECRET
+kubectl create secret generic cifscreds --from-literal username=TESTER --from-literal password=SECRET --from-literal security=SECURITY
 ```
 
 2. create the cifs-enabled pod
@@ -75,7 +75,7 @@ kubectl exec cc -- ls -l /data
 
 ### Docker building dockers - keeping them small
 
-docker build process split into a 'builder' docker and a 'runtime' 
+docker build process split into a 'builder' docker and a 'runtime'
 docker to keep final docker image as small as possible.
 
 To build the runtime docker image, clone this project and then

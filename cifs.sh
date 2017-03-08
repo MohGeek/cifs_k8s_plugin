@@ -65,12 +65,13 @@ domount() {
         MOUNT_OPTIONS=$(echo "$3"|"$JQ" -r '.mountOptions // empty')
         USERNAME=$(echo "$3"|"$JQ" -r '.["kubernetes.io/secret/username"] // empty'|base64 -d)
         PASSWORD=$(echo "$3"|"$JQ" -r '.["kubernetes.io/secret/password"] // empty'|base64 -d)
+        SECURITY=$(echo "$3"|"$JQ" -r '.["kubernetes.io/secret/security"] // empty'|base64 -d)
 
-        ALL_OPTIONS="user=${USERNAME},pass=${PASSWORD},${READ_MODE}"
+        ALL_OPTIONS="user=${USERNAME},pass=${PASSWORD},sec=${SECURITY},${READ_MODE}"
         if [ -n "$MOUNT_OPTIONS" ]; then
             ALL_OPTIONS="${ALL_OPTIONS},${MOUNT_OPTIONS}"
         fi
-        
+
         if ismounted ; then
                 log '{"status": "Success"}'
                 exit 0
